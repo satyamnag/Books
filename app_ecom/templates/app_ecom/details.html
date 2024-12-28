@@ -1,0 +1,35 @@
+{% extends 'app_ecom/base.html' %}
+<body>
+    {% block body %}
+    <div class="container">
+        <div class="card mb-3" style="max-width: 1200px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{{ book.book_cover }}" class="img-fluid rounded-start" alt="book cover" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: transform 0.2s; height: 360px; width: 300px;">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><b>{{ book.book_name }}</b> by {{ book.book_author }}</h5>
+                  <p class="card-text" style="text-align: justify;"><b>About the Author: </b>{{ book.about_the_author }}</p>
+                  <p class="card-text"><small class="text-muted">{{ book.product_details }}</small></p>
+                  <p class="card-text" style="margin-top: -10px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="text-align: left;">
+                        {{ book.book_rating }}/5 <span style="color: blue;">({{ book.book_rating_count }})</span>
+                    </span>
+                    <span style="text-align: right;">
+                        <span style="color: orange; padding-right: 5px;">-{{ book.discount }}%</span>
+                        M.R.P. 
+                        <span style="text-decoration: line-through; padding-right: 5px;">₹{{ book.mrp }}</span>
+                        <span style="color: green; margin-right: 0%;">₹{{ book.selling_price }}</span>
+                    </span>
+                  </p>
+                  <div class="button-group" style="display: flex; gap: 10px;">
+                    <a href="{% url 'books' %}"><button type="button" class="btn btn-outline-secondary">Back</button></a>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    {% endblock %}
+</body>

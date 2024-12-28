@@ -1,0 +1,133 @@
+{% extends 'app_ecom/base.html' %}
+    {% block body %}
+    <div class="container">
+        <div class="container">
+            <h1 style="text-align: center;"><b>Your Cart</b></h1>
+            <div class="row justify-content-center">
+              <div class="col-md-12">
+                <ol class="list-group list-group-numbered" style="align-items: center;">
+                  <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                      <div class="fw-bold" id="item_list"></div>
+                    </div>
+                  </li>
+                </ol>
+                <h1 style="text-align: center;"><b>Checkout Form</b></h1>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="items" name="items">
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="inputEmail4">Email</label><span style="color: red;">*</span>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="inputFirstName">First name</label><span style="color: red;">*</span>
+                        <input type="text" class="form-control" placeholder="First name" id="first_name" name="first_name">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="inputLastName">Last name</label><span style="color: red;">*</span>
+                        <input type="text" class="form-control" placeholder="Last name" id="last_name" name="last_name">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputAddress">Address 1</label>
+                      <input type="text" class="form-control" id="address1" name="address1" placeholder="House no., Floor no., Apartment">
+                    </div>
+                    <div class="form-group">
+                      <label for="inputAddress2">Address 2</label>
+                      <input type="text" class="form-control" id="address2" name="address2" placeholder="Locality, Main street">
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputCity">City</label>
+                        <input type="text" class="form-control" id="city" name="city">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="inputState">State/UT</label>
+                        <select id="state" name="state" class="form-control">
+                          <option selected>Choose...</option>
+                          <option>Andhra Pradesh</option>
+                          <option>Arunachal Pradesh</option>
+                          <option>Assam</option>
+                          <option>Bihar</option>
+                          <option>Chhattisgarh</option>
+                          <option>Goa</option>
+                          <option>Gujarat</option>
+                          <option>Haryana</option>
+                          <option>Himachal Pradesh</option>
+                          <option>Jharkhand</option>
+                          <option>Karnataka</option>
+                          <option>Kerala</option>
+                          <option>Madhya Pradesh</option>
+                          <option>Maharashtra</option>
+                          <option>Manipur</option>
+                          <option>Meghalaya</option>
+                          <option>Mizoram</option>
+                          <option>Nagaland</option>
+                          <option>Odisha</option>
+                          <option>Punjab</option>
+                          <option>Rajasthan</option>
+                          <option>Sikkim</option>
+                          <option>Tamil Nadu</option>
+                          <option>Telangana</option>
+                          <option>Tripura</option>
+                          <option>Uttar Pradesh</option>
+                          <option>Uttarakhand</option>
+                          <option>West Bengal</option>
+                          <option>Andaman and Nicobar Islands</option>
+                          <option>Chandigarh</option>
+                          <option>Dadra and Nagar Haveli and Daman and Diu</option>
+                          <option>Delhi</option>
+                          <option>Lakshadweep</option>
+                          <option>Puducherry</option>
+                          <option>Ladakh</option>
+                          <option>Jammu and Kashmir</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label for="inputZip">Pin code</label>
+                        <input type="text" class="form-control" id="pincode" name="pincode">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label for="inputZip">Amount to be Paid: </label>
+                        <input readonly="" type="text" class="form-control" id="total" name="total">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <label class="form-check-label" for="gridCheck">
+                            I agree to the <a href="">terms and conditions</a> and acknowledge the <a href="">privacy policy</a>.
+                        </label>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+              </div>
+            </div>
+          </div>          
+    </div>
+    <script type="text/javascript">
+        if(localStorage.getItem('cart')==null){
+            var cart={};
+        }
+        else{
+            cart=JSON.parse(localStorage.getItem('cart'));
+        }
+        let total=0;
+        for(item in cart){
+            let name=cart[item][1];
+            let quantity=cart[item][0];
+            let price=cart[item][2];
+            total+=cart[item][2];
+
+            itemString=`<li class="list-group-item"><b>${name}</b>- Quantity: ${quantity}- Price: <span style='color:green';>₹</span><span style="color:green;">${price}</span></li>`
+            $('#item_list').append(itemString);
+        }
+        totalPrice=`<li class="list-group-item d-flex justify-content-between align-items-center"><b>Your Total: <sapn style="color:green";>₹${total}</span></b></li>`
+        $('#total').val(total);
+        $('#item_list').append(totalPrice);
+        $('#items').val(JSON.stringify(cart));
+    </script>
+    {% endblock %}
